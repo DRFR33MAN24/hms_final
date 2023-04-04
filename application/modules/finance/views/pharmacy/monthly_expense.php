@@ -1,7 +1,7 @@
 <!--sidebar end-->
 <!--main content start-->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-<section id="main-content"> 
+<section id="main-content">
     <section class="wrapper site-min-height">
         <!--state overview start-->
         <link href="common/extranal/css/pharmacy/daily.css" rel="stylesheet">
@@ -16,10 +16,10 @@
                     $previous_year = $currently_processing_year - 1;
                     ?>
 
-                    <div class="panel-heading"> <?php echo date('Y', $first_minute) . ' ' .lang('pharmacy').' '. lang('expense_report'); ?> 
-                        
+                    <div class="panel-heading"> <?php echo date('Y', $first_minute) . ' ' . lang('pharmacy') . ' ' . lang('expense_report'); ?>
+
                         <div class="col-md-1 pull-right no-print">
-                            <a class="no-print pull-right" onclick="javascript:window.print();"> <i class="fa fa-print"></i>  </a>
+                            <a class="no-print pull-right" onclick="javascript:window.print();"> <i class="fa fa-print"></i> </a>
                         </div>
                         <div class="col-md-1 pull-right no-print">
                             <a href="finance/pharmacy/monthlyExpense?year=<?php echo $next_year; ?>">
@@ -32,7 +32,7 @@
                             </a>
                         </div>
                     </div>
-                    <div  id="chart_div"></div>
+                    <div id="chart_div"></div>
 
 
 
@@ -63,19 +63,19 @@
                                                 $amount = 0;
                                             }
                                         }
-                                        ?>
-                                    
+                                    ?>
+
                                         <tr>
                                             <td><?php echo $month_name; ?></td>
                                             <td><?php echo $this->currency; ?><?php echo number_format($amount, 2, '.', ','); ?></td>
                                             <?php $total_amount[] = $amount; ?>
                                         </tr>
 
-                                        <?php
+                                    <?php
                                     }
                                     ?>
-                                        
-                                         <?php
+
+                                    <?php
                                     if (!empty($total_amount)) {
                                         $total_amount = array_sum($total_amount);
                                     } else {
@@ -84,11 +84,11 @@
                                     ?>
 
                                     <tr class="total_amount">
-                                        <td><?php echo lang('total'); ?></td> 
+                                        <td><?php echo lang('total'); ?></td>
                                         <td><?php echo $this->currency; ?><?php echo number_format($total_amount, 2, '.', ','); ?></td>
                                     </tr>
 
-                    
+
 
                                 </tbody>
                             </table>
@@ -118,7 +118,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title"><?php echo lang(stock_alert); ?></h4>
+                <h4 class="modal-title"><?php echo lang($stock_alert); ?></h4>
             </div>
             <div class="modal-body">
 
@@ -136,7 +136,7 @@
 
 <script src="common/js/codearistos.min.js"></script>
 <script>
-    $(window).on('load', function () {
+    $(window).on('load', function() {
         //      $('#myModal33').modal('show');
     });
 </script>
@@ -145,4 +145,5 @@
 
 
 </body>
+
 </html>

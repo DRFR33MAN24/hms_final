@@ -1086,7 +1086,7 @@ class Appointment extends MX_Controller
             $end_time = explode(' ', $time_slot_new[1]);
 
             if ($start_time[1] == 'AM') {
-                $start_time_second = explode(':', $start_time[0]);
+                $start_time_second = array_map('intval', explode(':', $start_time[0]));
                 if ($start_time_second[0] == 12) {
                     $day_start_time_second = $start_time_second[1] * 60;
                 } else {
@@ -1094,22 +1094,22 @@ class Appointment extends MX_Controller
                 }
             } else {
                 $start_time_second = explode(':', $start_time[0]);
-                if ($start_time_second[0] == 12) {
-                    $day_start_time_second = 12 * 60 * 60 + $start_time_second[1] * 60;
+                if (intval($start_time_second[0]) == 12) {
+                    $day_start_time_second = 12 * 60 * 60 + intval($start_time_second[1]) * 60;
                 } else {
-                    $day_start_time_second = 12 * 60 * 60 + $start_time_second[0] * 60 * 60 + $start_time_second[1] * 60;
+                    $day_start_time_second = 12 * 60 * 60 + intval($start_time_second[0]) * 60 * 60 + intval($start_time_second[1]) * 60;
                 }
             }
 
             if ($end_time[1] == 'AM') {
-                $end_time_second = explode(':', $end_time[0]);
+                $end_time_second = array_map('intval', explode(':', $end_time[0]));
                 if ($end_time_second[0] == 12) {
                     $day_end_time_second = $end_time_second[1] * 60;
                 } else {
                     $day_end_time_second = $end_time_second[0] * 60 * 60 + $end_time_second[1] * 60;
                 }
             } else {
-                $end_time_second = explode(':', $end_time[0]);
+                $end_time_second = array_map('intval', explode(':', $end_time[0]));
                 if ($end_time_second[0] == 12) {
                     $day_end_time_second = 12 * 60 * 60 + $end_time_second[1] * 60;
                 } else {
@@ -2580,7 +2580,7 @@ class Appointment extends MX_Controller
                     $doctorname,
                     date('d-m-Y', $appointment->date) . ' <br> ' . $appointment->s_time . '-' . $appointment->e_time,
                     $appointment->remarks,
-                     $appointment->status,
+                    $appointment->status,
                     $visit_type_name,
                     $invoice,
                     $this->settings->currency . '' . $appointment->visit_charges,

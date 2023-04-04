@@ -4,11 +4,11 @@
         <!-- page start-->
         <section class="panel">
             <header class="panel-heading">
-                <?php echo lang('leave'); ?>    
-                <div class="col-md-4 no-print pull-right"> 
+                <?php echo lang('leave'); ?>
+                <div class="col-md-4 no-print pull-right">
                     <a data-toggle="modal" href="#myModal">
                         <div class="btn-group pull-right">
-                            <button  class="btn green btn-xs">
+                            <button class="btn green btn-xs">
                                 <i class="fa fa-plus-circle"></i> <?php echo lang('add_leave'); ?>
                             </button>
                         </div>
@@ -31,7 +31,7 @@
                         </thead>
                         <tbody>
 
-                       
+
 
 
 
@@ -52,26 +52,26 @@
 
 
 <!-- Add Accountant Modal-->
-<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" >
+<div class="modal fade" id="myModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-                <h4 class="modal-title">  <?php echo lang('add_new_leave'); ?></h4>
+                <h4 class="modal-title"> <?php echo lang('add_new_leave'); ?></h4>
             </div>
             <div class="modal-body row">
                 <form role="form" action="leave/addNew" class="clearfix" method="post" enctype="multipart/form-data">
-                    <?php if($this->ion_auth->in_group(array('admin'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
                         <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('choose_staff'); ?> &ast;</label>
-                        <select name="staff" class="" id="add_leave_staff" required=""></select>
-                    </div>
+                            <label for="exampleInputEmail1"><?php echo lang('choose_staff'); ?> &ast;</label>
+                            <select name="staff" class="" id="add_leave_staff" required=""></select>
+                        </div>
                     <?php } ?>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('leave_type'); ?> &ast;</label>
                         <select name="leave_type" class="ca_select2" id="ca_select2" required="">
-                            <?php foreach($leave_types as $leaveType) { ?>
-                            <option value="<?php echo $leaveType->name; ?>"><?php echo $leaveType->name; ?></option>
+                            <?php foreach ($leave_types as $leaveType) { ?>
+                                <option value="<?php echo $leaveType->name; ?>"><?php echo $leaveType->name; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -79,41 +79,41 @@
                         <label for="exampleInputEmail1"><?php echo lang('select_duration'); ?> &ast;</label>
                         <div class="check_div">
                             <div class="form-check form-check-inline">
-                            <input class="form-check-input leave_duration" type="radio" name="duration" id="inlineRadio1" value="single">
-                            <label class="form-check-label" for="inlineRadio1"><?php echo lang('single'); ?></label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input leave_duration" type="radio" name="duration" id="inlineRadio2" value="multiple">
-                            <label class="form-check-label" for="inlineRadio2"><?php echo lang('multiple'); ?></label>
-                          </div>
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input leave_duration" type="radio" name="duration" id="inlineRadio3" value="halfday">
-                            <label class="form-check-label" for="inlineRadio3"><?php echo lang('halfday'); ?></label>
-                          </div>
+                                <input class="form-check-input leave_duration" type="radio" name="duration" id="inlineRadio1" value="single">
+                                <label class="form-check-label" for="inlineRadio1"><?php echo lang('single'); ?></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input leave_duration" type="radio" name="duration" id="inlineRadio2" value="multiple">
+                                <label class="form-check-label" for="inlineRadio2"><?php echo lang('multiple'); ?></label>
+                            </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input leave_duration" type="radio" name="duration" id="inlineRadio3" value="halfday">
+                                <label class="form-check-label" for="inlineRadio3"><?php echo lang('halfday'); ?></label>
+                            </div>
                         </div>
                     </div>
 
                     <div class="form-group col-md-6 singleDate">
                         <label for="exampleInputEmail1"><?php echo lang('date'); ?> &ast;</label>
-                        <input type="text" class="form-control single_date_picker readonly" name="date"  value='' placeholder="" required autocomplete="off">
+                        <input type="text" class="form-control single_date_picker readonly" name="date" value='' placeholder="" autocomplete="off">
                     </div>
-                    
+
                     <div class="form-group col-md-6 multiDate">
                         <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
                         <input type="text" class="form-control " name="date2" id="multi_date_picker" placeholder="" readonly="" multiple="">
                     </div>
-                    
+
                     <div class="col-md-6"></div>
-                   
+
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('reason_for_leave'); ?> &ast;</label>
-                        <textarea  class="form-control reason" name="reason" rows="5" required></textarea>
+                        <textarea class="form-control reason" name="reason" rows="5" required></textarea>
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('status'); ?> &ast;</label>
                         <select name="status" class="ca_select2" required>
-                            <?php if($this->ion_auth->in_group(array('admin'))) { ?>
+                            <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
                                 <option value="approved"><?php echo lang('approved'); ?></option>
                             <?php } ?>
                             <option value="pending"><?php echo lang('pending'); ?></option>
@@ -147,17 +147,17 @@
             </div>
             <div class="modal-body">
                 <form role="form" id="editLeaveForm" class="clearfix" action="leave/updateLeave" method="post" enctype="multipart/form-data">
-                    <?php if($this->ion_auth->in_group(array('admin'))) { ?>
+                    <?php if ($this->ion_auth->in_group(array('admin'))) { ?>
                         <div class="form-group col-md-6">
-                        <label for="exampleInputEmail1"><?php echo lang('choose_staff'); ?> &ast;</label>
-                        <select name="staff" class="" id="edit_leave_staff" required=""></select>
-                    </div>
+                            <label for="exampleInputEmail1"><?php echo lang('choose_staff'); ?> &ast;</label>
+                            <select name="staff" class="" id="edit_leave_staff" required=""></select>
+                        </div>
                     <?php } ?>
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('leave_type'); ?> &ast;</label>
                         <select name="leave_type" class="ca_select2" id="edit_Leave_select2" required="">
-                            <?php foreach($leave_types as $leaveType) { ?>
-                            <option value="<?php echo $leaveType->name; ?>"><?php echo $leaveType->name; ?></option>
+                            <?php foreach ($leave_types as $leaveType) { ?>
+                                <option value="<?php echo $leaveType->name; ?>"><?php echo $leaveType->name; ?></option>
                             <?php } ?>
                         </select>
                     </div>
@@ -165,14 +165,14 @@
                         <label for="exampleInputEmail1"><?php echo lang('select_duration'); ?> &ast;</label>
                         <div class="check_div">
                             <div class="form-check form-check-inline">
-                            <input class="form-check-input edit_leave_duration" type="radio" name="duration" id="single" value="single">
-                            <label class="form-check-label" for="inlineRadio1"><?php echo lang('single'); ?></label>
-                          </div>
+                                <input class="form-check-input edit_leave_duration" type="radio" name="duration" id="single" value="single">
+                                <label class="form-check-label" for="inlineRadio1"><?php echo lang('single'); ?></label>
+                            </div>
 
-                          <div class="form-check form-check-inline">
-                            <input class="form-check-input edit_leave_duration" type="radio" name="duration" id="halfday" value="halfday">
-                            <label class="form-check-label" for="inlineRadio3"><?php echo lang('halfday'); ?></label>
-                          </div>
+                            <div class="form-check form-check-inline">
+                                <input class="form-check-input edit_leave_duration" type="radio" name="duration" id="halfday" value="halfday">
+                                <label class="form-check-label" for="inlineRadio3"><?php echo lang('halfday'); ?></label>
+                            </div>
                         </div>
                     </div>
 
@@ -180,22 +180,22 @@
                         <label for="exampleInputEmail1"><?php echo lang('date'); ?> &ast;</label>
                         <input type="text" class="form-control single_date_picker readonly" name="date" id="editDate" value='' placeholder="" required>
                     </div>
-                    
+
                     <div class="form-group col-md-6 multiDate">
                         <label for="exampleInputEmail1"><?php echo lang('date'); ?></label>
                         <input type="text" class="form-control " name="date2" id="edit_multi_date_picker" placeholder="" readonly="" multiple="">
                     </div>
-                    
+
                     <div class="col-md-6"></div>
-                   
+
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('reason_for_leave'); ?> &ast;</label>
-                        <textarea  class="form-control reason" name="reason" rows="5" required></textarea>
+                        <textarea class="form-control reason" name="reason" rows="5" required></textarea>
                     </div>
-                    
+
                     <div class="form-group col-md-6">
                         <label for="exampleInputEmail1"><?php echo lang('status'); ?> &ast;</label>
-                        <select name="status" id="editLeaveStatus" class="ca_select2" required <?php if(!$this->ion_auth->in_group(array('admin'))) { ?>disabled<?php } ?>>
+                        <select name="status" id="editLeaveStatus" class="ca_select2" required <?php if (!$this->ion_auth->in_group(array('admin'))) { ?>disabled<?php } ?>>
                             <option value="approved"><?php echo lang('approved'); ?></option>
                             <option value="pending"><?php echo lang('pending'); ?></option>
                         </select>
@@ -276,6 +276,10 @@
 
 <script src="common/js/codearistos.min.js"></script>
 
-<script type="text/javascript">var select_staff = "<?php echo lang('select_staff'); ?>";</script>
-<script type="text/javascript">var language = "<?php echo $this->language; ?>";</script>
+<script type="text/javascript">
+    var select_staff = "<?php echo lang('select_staff'); ?>";
+</script>
+<script type="text/javascript">
+    var language = "<?php echo $this->language; ?>";
+</script>
 <script src="common/extranal/js/leave/leave.js"></script>

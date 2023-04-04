@@ -117,10 +117,10 @@
                                                                 <td><?php echo $service->payment_id; ?></td>
                                                                 <td><?php echo $settings->currency; ?><?php echo $service->price; ?></td>
                                                                 <td><?php echo $service->quantity ?></td>
-                                                                <td><?php echo $settings->currency; ?><?php echo $service->price * $service->quantity; ?></td>
+                                                                <td><?php echo $settings->currency; ?><?php echo floatval($service->price) * floatval($service->quantity); ?></td>
                                                             </tr>
                                                 <?php
-                                                            $service_total = $service->price * $service->quantity;
+                                                            $service_total = floatval($service->price) * floatval($service->quantity);
                                                             $service_total_sum[] = $service_total;
                                                         }
                                                     }

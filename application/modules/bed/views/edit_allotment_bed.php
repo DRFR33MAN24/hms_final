@@ -433,7 +433,7 @@
                                                         <td><?php echo $invoice_id; ?></td>
                                                         <td><?php echo $settings->currency; ?><?php echo $service->price; ?></td>
                                                         <td><?php echo $service->quantity ?></td>
-                                                        <td><?php echo $settings->currency; ?><?php echo $service->price * $service->quantity; ?></td>
+                                                        <td><?php echo $settings->currency; ?><?php echo floatval($service->price) * floatval($service->quantity); ?></td>
                                                         <?php if (empty($allotment->d_time) || $this->ion_auth->in_group(array('admin'))) { ?>
                                                             <td class="no-print" id="delete-service-<?php echo date('d') . '-' . $service->id; ?>"><button type='button' class='btn btn-danger btn-xs btn_width delete_service' title='<?php echo lang('delete'); ?>' data-toggle='' data-id="<?php echo $service->id . "**" . $service->service; ?>"><i class='fa fa-trash'></i></button></td>
                                                         <?php } ?>
@@ -1048,6 +1048,6 @@ if (!$this->ion_auth->in_group(array('admin'))) {
     var language = "<?php echo $this->language; ?>";
 </script>
 <script type="text/javascript">
-    var currency = "<?php echo $this->settings->currency; ?>"; 
+    var currency = "<?php echo $this->settings->currency; ?>";
 </script>
 <script src="common/extranal/js/bed/edit_allotment_bed.js"></script>

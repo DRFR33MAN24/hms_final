@@ -2,33 +2,37 @@
 <section id="main-content">
     <section class="wrapper site-min-height">
         <!-- invoice start-->
-         <link href="common/extranal/css/pharmacy/invoice.css" rel="stylesheet">
-         <style>
-                    @media print{
-                        #main-content{
-                            display:flex;
-                            height: 40vh;
-                            max-height:10% !important;
-                            max-width:3.11in  !important;
-                        }
-                        .table-striped th{
-                            font-size: 8px !important;
-                        }
-                        .table-striped td{
-                            font-size: 8px !important;
-                        }
-                        h4{
-                            font-size:10px !important;
-                        }
-                        .panel{
-                            border:none !important;
-                        }
-                    }
+        <link href="common/extranal/css/pharmacy/invoice.css" rel="stylesheet">
+        <style>
+            @media print {
+                #main-content {
+                    display: flex;
+                    height: 40vh;
+                    max-height: 10% !important;
+                    max-width: 3.11in !important;
+                }
+
+                .table-striped th {
+                    font-size: 8px !important;
+                }
+
+                .table-striped td {
+                    font-size: 8px !important;
+                }
+
+                h4 {
+                    font-size: 10px !important;
+                }
+
+                .panel {
+                    border: none !important;
+                }
+            }
         </style>
         <section>
             <div class="panel panel-primary">
-                
-                <div  class="panel-body col-md-5 panel-moree" id="invoice">
+
+                <div class="panel-body col-md-5 panel-moree" id="invoice">
                     <div class="row invoice-list">
 
                         <div class="text-center corporate-id">
@@ -43,17 +47,17 @@
                             </h4>
                         </div>
 
-                        
+
                         <div class="col-lg-4 col-sm-4 details">
                             <h4> <?php echo lang('payment_to'); ?> :</h4>
                             <p>
                                 <?php echo $settings->title; ?> <br>
                                 <?php echo $settings->address; ?><br>
-                                Tel:  <?php echo $settings->phone; ?>
+                                Tel: <?php echo $settings->phone; ?>
                             </p>
                         </div>
-                        
-                        
+
+
                         <?php if (!empty($payment->patient)) { ?>
                             <div class="col-lg-4 col-sm-4 details">
                                 <h4> <?php echo lang('bill_to'); ?> :</h4>
@@ -62,7 +66,8 @@
                                     $patient_info = $this->db->get_where('patient', array('id' => $payment->patient))->row();
                                     echo $patient_info->name . ' <br>';
                                     echo $patient_info->address . '  <br/>';
-                                    P: echo $patient_info->phone
+                                    P:
+                                    echo $patient_info->phone
                                     ?>
                                 </p>
                             </div>
@@ -70,15 +75,15 @@
                         <div class="col-lg-4 col-sm-4 details pull-right">
                             <h4> <?php echo lang('invoice_info'); ?> </h4>
                             <ul class="unstyled">
-                                <li> <?php echo lang('invoice_number'); ?> 		: <strong>00<?php echo $payment->id; ?></strong></li>
-                                
+                                <li> <?php echo lang('invoice_number'); ?> : <strong>00<?php echo $payment->id; ?></strong></li>
+
                             </ul>
                         </div>
 
                         <div class="col-lg-4 col-sm-4 details">
                             <h4> <?php echo lang('date'); ?> </h4>
-                            <ul class="unstyled"> 
-                                <li><?php echo date('m/d/Y', $payment->date); ?></li>    
+                            <ul class="unstyled">
+                                <li><?php echo date('m/d/Y', $payment->date); ?></li>
                             </ul>
                         </div>
                     </div>
@@ -113,7 +118,7 @@
                                 foreach ($category_name1 as $category_name2) {
                                     $category_name3 = explode('*', $category_name2);
                                     if ($category_name3[1] > 0) {
-                                        ?>                
+                            ?>
                                         <tr>
                                             <td><?php echo $i = $i + 1; ?></td>
                                             <td><?php
@@ -125,8 +130,8 @@
                                             <td class=""><?php echo $settings->currency; ?> <?php echo $category_name3[1]; ?> </td>
                                             <td class=""> <?php echo $category_name3[2]; ?> </td>
                                             <td class=""><?php echo $settings->currency; ?> <?php echo $category_name3[1] * $category_name3[2]; ?> </td>
-                                        </tr> 
-                                        <?php
+                                        </tr>
+                            <?php
                                     }
                                 }
                             }
@@ -137,34 +142,34 @@
                     <div class="row">
                         <div class="col-lg-6 invoice-block pull-right">
                             <ul class="unstyled amounts">
-                                <li><strong> <?php echo lang('sub_total'); ?>   <?php echo lang('amount'); ?>  : </strong><?php echo $settings->currency; ?> <?php echo $payment->amount; ?></li>
+                                <li><strong> <?php echo lang('sub_total'); ?> <?php echo lang('amount'); ?> : </strong><?php echo $settings->currency; ?> <?php echo $payment->amount; ?></li>
                                 <?php if (!empty($payment->discount)) { ?>
                                     <li><strong>Discount</strong> <?php
-                                        if ($discount_type == 'percentage') {
-                                            echo '(%) : ';
-                                        } else {
-                                            echo ': ' . $settings->currency;
-                                        }
-                                        ?> <?php
-                                        $discount = explode('*', $payment->discount);
-                                        if (!empty($discount[1])) {
-                                            echo $discount[0] . ' %  =  ' . $settings->currency . ' ' . $discount[1];
-                                        } else {
-                                            echo $discount[0];
-                                        }
-                                        ?></li>
+                                                                    if ($discount_type == 'percentage') {
+                                                                        echo '(%) : ';
+                                                                    } else {
+                                                                        echo ': ' . $settings->currency;
+                                                                    }
+                                                                    ?> <?php
+                                                                        $discount = explode('*', $payment->discount);
+                                                                        if (!empty($discount[1])) {
+                                                                            echo $discount[0] . ' %  =  ' . $settings->currency . ' ' . $discount[1];
+                                                                        } else {
+                                                                            echo $discount[0];
+                                                                        }
+                                                                        ?></li>
                                 <?php } ?>
                                 <?php if (!empty($payment->vat)) { ?>
-                                    <li><strong> <?php echo lang('vat'); ?>  :</strong>   <?php
-                                        if (!empty($payment->vat)) {
-                                            echo $payment->vat;
-                                        } else {
-                                            echo '0';
-                                        }
-                                        ?> % = <?php echo $settings->currency . ' ' . $payment->flat_vat; ?></li>
+                                    <li><strong> <?php echo lang('vat'); ?> :</strong> <?php
+                                                                                        if (!empty($payment->vat)) {
+                                                                                            echo $payment->vat;
+                                                                                        } else {
+                                                                                            echo '0';
+                                                                                        }
+                                                                                        ?> % = <?php echo $settings->currency . ' ' . $payment->flat_vat; ?></li>
                                 <?php } ?>
-                                <li><strong> <?php echo lang('grand_total'); ?>  : </strong><?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></li>
-                                
+                                <li><strong> <?php echo lang('grand_total'); ?> : </strong><?php echo $settings->currency; ?> <?php echo $payment->gross_total; ?></li>
+
                             </ul>
                         </div>
                     </div>
@@ -190,12 +195,12 @@
                             <a href="finance/pharmacy/editPayment?id=<?php echo $payment->id; ?>" class="btn btn-info btn-lg green pull-left"><i class="fa fa-edit"></i> <?php echo lang('edit_invoice'); ?> </a>
                         <?php } ?>
                     </div>
-                  <div class="text-center invoice-btn no-print pull-left ">
-                        <a href="finance/pharmacy/previousInvoice?id=<?php echo $payment->id ?>"class="btn btn-info btn-lg green previousone1"><i class="glyphicon glyphicon-chevron-left"></i> </a>
-                        <a href="finance/pharmacy/nextInvoice?id=<?php echo $payment->id ?>"class="btn btn-info btn-lg green nextone1 "><i class="glyphicon glyphicon-chevron-right"></i> </a>
+                    <div class="text-center invoice-btn no-print pull-left ">
+                        <a href="finance/pharmacy/previousInvoice?id=<?php echo $payment->id ?>" class="btn btn-info btn-lg green previousone1"><i class="glyphicon glyphicon-chevron-left"></i> </a>
+                        <a href="finance/pharmacy/nextInvoice?id=<?php echo $payment->id ?>" class="btn btn-info btn-lg green nextone1 "><i class="glyphicon glyphicon-chevron-right"></i> </a>
 
                     </div>
-                    
+
 
 
                 </div>
@@ -210,6 +215,6 @@
 <!--footer start-->
 
 <script src="common/js/codearistos.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.5.3/jspdf.min.js"></script>
+<script type="text/javascript" src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
 <script src="common/extranal/js/pharmacy/invoice.js"></script>

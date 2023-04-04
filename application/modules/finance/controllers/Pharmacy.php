@@ -3,13 +3,15 @@
 if (!defined('BASEPATH'))
     exit('No direct script access allowed');
 
-class Pharmacy extends MX_Controller {
+class Pharmacy extends MX_Controller
+{
 
-    function __construct() {
+    function __construct()
+    {
         parent::__construct();
         $this->load->model('pharmacy_model');
         $this->load->model('medicine/medicine_model');
-         $this->load->model('accountant/accountant_model');
+        $this->load->model('accountant/accountant_model');
         $this->load->model('settings/settings_model');
         $data['settings'] = $this->settings_model->getSettings();
         if (!$this->ion_auth->in_group(array('admin', 'Accountant', 'Pharmacist'))) {
@@ -17,10 +19,11 @@ class Pharmacy extends MX_Controller {
         }
     }
 
-    function home() {
-       log_message('error',$this->session->userdata('hospital_id'));
+    function home()
+    {
+        log_message('error', $this->session->userdata('hospital_id'));
         $data = array();
-        
+
         $data['accountants'] = $this->accountant_model->getAccountant();
         $data['latest_medicines'] = $this->medicine_model->getLatestMedicine();
         $data['settings'] = $this->settings_model->getSettings();
@@ -28,9 +31,9 @@ class Pharmacy extends MX_Controller {
         $data['expenses'] = $this->pharmacy_model->getExpense();
         $data['today_sales_amount'] = $this->pharmacy_model->todaySalesAmount();
         $data['today_expenses_amount'] = $this->pharmacy_model->todayExpensesAmount();
-        
-        
-        
+
+
+
         $data['this_month']['payment'] = $this->pharmacy_model->thisMonthPayment();
         $data['this_month']['expense'] = $this->pharmacy_model->thisMonthExpense();
 
@@ -42,26 +45,28 @@ class Pharmacy extends MX_Controller {
         $data['this_year']['payment'] = $this->pharmacy_model->thisYearPayment();
         $data['this_year']['expense'] = $this->pharmacy_model->thisYearExpense();
 
-        
-        
+
+
         $data['this_year']['payment_per_month'] = $this->pharmacy_model->getPaymentPerMonthThisYear();
-        
-        
+
+
         $data['this_year']['expense_per_month'] = $this->pharmacy_model->getExpensePerMonthThisYear();
-        
-        
-        
-        
-        $this->load->view('home/dashboard', $data); 
+
+
+
+
+        $this->load->view('home/dashboard', $data);
         $this->load->view('finance/pharmacy/home', $data);
         $this->load->view('home/footer');
     }
 
-    public function index() {
+    public function index()
+    {
         redirect('pharmacy/financial_report');
     }
 
-    public function payment() {
+    public function payment()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -71,18 +76,19 @@ class Pharmacy extends MX_Controller {
         }
         $data['settings'] = $this->settings_model->getSettings();
         $data['payments'] = $this->pharmacy_model->getPayment();
-        
+
 
 
         $data['pagee_number'] = $page_number;
         $data['p_n'] = '0';
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/payment', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function paymentByPageNumber() {
+    public function paymentByPageNumber()
+    {
         $page_number = $this->input->get('page_number');
         if (empty($page_number)) {
             $page_number = 0;
@@ -93,30 +99,33 @@ class Pharmacy extends MX_Controller {
         $data['settings'] = $this->settings_model->getSettings();
         $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/payment', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function addPaymentView() {
+    public function addPaymentView()
+    {
         $data = array();
         $data['discount_type'] = $this->pharmacy_model->getDiscountType();
         $data['settings'] = $this->settings_model->getSettings();
         $data['medicines'] = $this->medicine_model->getMedicine();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_payment_view', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function addPaymentViewDebug() {
+    public function addPaymentViewDebug()
+    {
         $data = array();
         $data['discount_type'] = $this->pharmacy_model->getDiscountType();
         $data['settings'] = $this->settings_model->getSettings();
         $data['medicines'] = $this->medicine_model->getMedicine();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_payment_view_new', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    function getMedicineByKeyJason() {
+    function getMedicineByKeyJason()
+    {
         $key = $this->input->get('keyword');
         $medicines = $this->medicine_model->getMedicineByKeyForPos($key);
 
@@ -142,7 +151,8 @@ class Pharmacy extends MX_Controller {
         echo json_encode($data);
     }
 
-    function searchPayment() {
+    function searchPayment()
+    {
         $page_number = $this->input->get('page_number');
         if (empty($page_number)) {
             $page_number = 0;
@@ -153,12 +163,13 @@ class Pharmacy extends MX_Controller {
         $data['settings'] = $this->settings_model->getSettings();
         $data['pagee_number'] = $page_number;
         $data['key'] = $key;
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/payment', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function addPayment() {
+    public function addPayment()
+    {
         $id = $this->input->post('id');
         $item_selected = array();
         $quantity = array();
@@ -190,7 +201,7 @@ class Pharmacy extends MX_Controller {
 
         $patient = $this->input->post('patient');
         $date = time();
-        $discount = $this->input->post('discount');
+        $discount = floatval($this->input->post('discount'));
         $amount_received = $this->input->post('amount_received');
 
         $this->load->library('form_validation');
@@ -203,7 +214,6 @@ class Pharmacy extends MX_Controller {
 
         if ($this->form_validation->run() == FALSE) {
             echo 'form validate noe nai re';
-            
         } else {
             $amount = array_sum($item_price);
             $sub_total = $amount;
@@ -274,7 +284,8 @@ class Pharmacy extends MX_Controller {
         }
     }
 
-    function editPayment() {
+    function editPayment()
+    {
         if ($this->ion_auth->in_group(array('admin', 'Accountant', 'Pharmacist'))) {
             $data = array();
             $data['discount_type'] = $this->pharmacy_model->getDiscountType();
@@ -282,26 +293,27 @@ class Pharmacy extends MX_Controller {
             $data['medicines'] = $this->medicine_model->getMedicine();
             $id = $this->input->get('id');
             $data['payment'] = $this->pharmacy_model->getPaymentById($id);
-            
-            if($data['payment']->hospital_id != $this->session->userdata('hospital_id')){
+
+            if ($data['payment']->hospital_id != $this->session->userdata('hospital_id')) {
                 redirect('home/permission');
             }
-            
-            $this->load->view('home/dashboard', $data); 
+
+            $this->load->view('home/dashboard', $data);
             $this->load->view('pharmacy/add_payment_view', $data);
             $this->load->view('home/footer'); // just the footer file
         }
     }
 
-    function delete() {
+    function delete()
+    {
         if ($this->ion_auth->in_group('admin')) {
             $id = $this->input->get('id');
-            
+
             $payment_details = $this->pharmacy_model->getPaymentById($id);
-            if($payment_details->hospital_id != $this->session->userdata('hospital_id')){
+            if ($payment_details->hospital_id != $this->session->userdata('hospital_id')) {
                 redirect('home/permission');
             }
-            
+
             $category_name = $this->pharmacy_model->getPaymentById($id)->category_name;
             $all_product_details = array();
             $all_product_details = explode(',', $category_name);
@@ -324,27 +336,30 @@ class Pharmacy extends MX_Controller {
         }
     }
 
-    public function expense() {
+    public function expense()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
         $data['settings'] = $this->settings_model->getSettings();
         $data['expenses'] = $this->pharmacy_model->getExpense();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/expense', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function addExpenseView() {
+    public function addExpenseView()
+    {
         $data = array();
         $data['settings'] = $this->settings_model->getSettings();
         $data['categories'] = $this->pharmacy_model->getExpenseCategory();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_expense_view', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function addExpense() {
+    public function addExpense()
+    {
         $id = $this->input->post('id');
         $category = $this->input->post('category');
         $date = time();
@@ -360,9 +375,9 @@ class Pharmacy extends MX_Controller {
             $data = array();
             $data['settings'] = $this->settings_model->getSettings();
             $data['categories'] = $this->pharmacy_model->getExpenseCategory();
-            $this->load->view('home/dashboard', $data); 
+            $this->load->view('home/dashboard', $data);
             $this->load->view('add_expense_view', $data);
-            $this->load->view('home/footer'); 
+            $this->load->view('home/footer');
         } else {
             $data = array();
             if (empty($id)) {
@@ -388,54 +403,59 @@ class Pharmacy extends MX_Controller {
         }
     }
 
-    function editExpense() {
+    function editExpense()
+    {
         $data = array();
         $data['categories'] = $this->pharmacy_model->getExpenseCategory();
         $data['settings'] = $this->settings_model->getSettings();
         $id = $this->input->get('id');
         $data['expense'] = $this->pharmacy_model->getExpenseById($id);
-        
-        if($data['expense']->hospital_id != $this->session->userdata('hospital_id')){
+
+        if ($data['expense']->hospital_id != $this->session->userdata('hospital_id')) {
             redirect('home/permission');
         }
-        
-        $this->load->view('home/dashboard', $data); 
+
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_expense_view', $data);
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function deleteExpense() {
+    function deleteExpense()
+    {
         $id = $this->input->get('id');
-        
-        $data['expense'] = $this->pharmacy_model->getExpenseById($id);        
-        if($data['expense']->hospital_id != $this->session->userdata('hospital_id')){
+
+        $data['expense'] = $this->pharmacy_model->getExpenseById($id);
+        if ($data['expense']->hospital_id != $this->session->userdata('hospital_id')) {
             redirect('home/permission');
         }
-        
+
         $this->pharmacy_model->deleteExpense($id);
         $this->session->set_flashdata('feedback', lang('deleted'));
         redirect('finance/pharmacy/expense');
     }
 
-    public function expenseCategory() {
+    public function expenseCategory()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
         $data['settings'] = $this->settings_model->getSettings();
         $data['categories'] = $this->pharmacy_model->getExpenseCategory();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/expense_category', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function addExpenseCategoryView() {
+    public function addExpenseCategoryView()
+    {
         $data['settings'] = $this->settings_model->getSettings();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_expense_category');
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    public function addExpenseCategory() {
+    public function addExpenseCategory()
+    {
         $id = $this->input->post('id');
         $category = $this->input->post('category');
         $description = $this->input->post('description');
@@ -448,12 +468,13 @@ class Pharmacy extends MX_Controller {
         $data['settings'] = $this->settings_model->getSettings();
         $this->form_validation->set_rules('description', 'Description', 'trim|required|min_length[1]|max_length[100]|xss_clean');
         if ($this->form_validation->run() == FALSE) {
-            $this->load->view('home/dashboard', $data); 
+            $this->load->view('home/dashboard', $data);
             $this->load->view('pharmacy/add_expense_category');
-            $this->load->view('home/footer'); 
+            $this->load->view('home/footer');
         } else {
             $data = array();
-            $data = array('category' => $category,
+            $data = array(
+                'category' => $category,
                 'description' => $description
             );
             if (empty($id)) {
@@ -467,61 +488,66 @@ class Pharmacy extends MX_Controller {
         }
     }
 
-    function editExpenseCategory() {
+    function editExpenseCategory()
+    {
         $data = array();
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['category'] = $this->pharmacy_model->getExpenseCategoryById($id);
-               
-        if($data['category']->hospital_id != $this->session->userdata('hospital_id')){
+
+        if ($data['category']->hospital_id != $this->session->userdata('hospital_id')) {
             redirect('home/permission');
         }
-        
-        $this->load->view('home/dashboard', $data); 
+
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/add_expense_category', $data);
         $this->load->view('home/footer'); // just the footer file
     }
 
-    function deleteExpenseCategory() {
+    function deleteExpenseCategory()
+    {
         $id = $this->input->get('id');
-        
-        $data['category'] = $this->pharmacy_model->getExpenseCategoryById($id);              
-        if($data['category']->hospital_id != $this->session->userdata('hospital_id')){
+
+        $data['category'] = $this->pharmacy_model->getExpenseCategoryById($id);
+        if ($data['category']->hospital_id != $this->session->userdata('hospital_id')) {
             redirect('home/permission');
         }
-        
+
         $this->pharmacy_model->deleteExpenseCategory($id);
         $this->session->set_flashdata('feedback', lang('deleted'));
         redirect('finance/pharmacy/expenseCategory');
     }
 
-    function invoice() {
-        $id = $this->input->get('id');        
-        $data['settings'] = $this->settings_model->getSettings();
-        $data['discount_type'] = $this->pharmacy_model->getDiscountType();
-        $data['payment'] = $this->pharmacy_model->getPaymentById($id);
-        if($data['payment']->hospital_id != $this->session->userdata('hospital_id')){
-            redirect('home/permission');
-        }
-        $this->load->view('home/dashboard', $data); 
-        $this->load->view('pharmacy/invoice', $data);
-        $this->load->view('home/footer'); // just the footer fi
-    }
-
-    function printInvoice() {
+    function invoice()
+    {
         $id = $this->input->get('id');
         $data['settings'] = $this->settings_model->getSettings();
         $data['discount_type'] = $this->pharmacy_model->getDiscountType();
         $data['payment'] = $this->pharmacy_model->getPaymentById($id);
-        if($data['payment']->hospital_id != $this->session->userdata('hospital_id')){
+        if ($data['payment']->hospital_id != $this->session->userdata('hospital_id')) {
             redirect('home/permission');
         }
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
+        $this->load->view('pharmacy/invoice', $data);
+        $this->load->view('home/footer'); // just the footer fi
+    }
+
+    function printInvoice()
+    {
+        $id = $this->input->get('id');
+        $data['settings'] = $this->settings_model->getSettings();
+        $data['discount_type'] = $this->pharmacy_model->getDiscountType();
+        $data['payment'] = $this->pharmacy_model->getPaymentById($id);
+        if ($data['payment']->hospital_id != $this->session->userdata('hospital_id')) {
+            redirect('home/permission');
+        }
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/print_invoice', $data);
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function amountReceived() {
+    function amountReceived()
+    {
         $id = $this->input->post('id');
         $amount_received = $this->input->post('amount_received');
         $previous_amount_received = $this->db->get_where('pharmacy_payment', array('id' => $id))->row()->amount_received;
@@ -532,7 +558,8 @@ class Pharmacy extends MX_Controller {
         redirect('finance/pharmacy/invoice?id=' . $id);
     }
 
-    function amountReceivedFromPT() {
+    function amountReceivedFromPT()
+    {
         $id = $this->input->post('id');
         $amount_received = $this->input->post('amount_received');
         $payments = $this->pharmacy_model->getPaymentByPatientId($id);
@@ -557,7 +584,8 @@ class Pharmacy extends MX_Controller {
         redirect('finance/pharmacy/invoicePatientTotal?id=' . $id);
     }
 
-    function todaySales() {
+    function todaySales()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -567,12 +595,13 @@ class Pharmacy extends MX_Controller {
         $data['settings'] = $this->settings_model->getSettings();
         $data['payments'] = $this->pharmacy_model->getPaymentByDate($today, $today_last);
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/today_sales', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    function todayExpense() {
+    function todayExpense()
+    {
         if (!$this->ion_auth->logged_in()) {
             redirect('auth/login', 'refresh');
         }
@@ -582,21 +611,23 @@ class Pharmacy extends MX_Controller {
         $data['settings'] = $this->settings_model->getSettings();
         $data['expenses'] = $this->pharmacy_model->getExpenseByDate($today, $today_last);
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/today_expenses', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    function todayNetCash() {
+    function todayNetCash()
+    {
         $data['today_sales_amount'] = $this->pharmacy_model->todaySalesAmount();
         $data['today_expenses_amount'] = $this->pharmacy_model->todayExpensesAmount();
         $data['settings'] = $this->settings_model->getSettings();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/today_net_cash', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    function salesPerMonth() {
+    function salesPerMonth()
+    {
 
         $payments = $this->pharmacy_model->getPayment();
         foreach ($payments as $payment) {
@@ -604,12 +635,12 @@ class Pharmacy extends MX_Controller {
             $month = date('m', $date);
             $year = date('y', $date);
             if ($month = '01') {
-                
             }
         }
     }
 
-    function financialReport() {
+    function financialReport()
+    {
         $date_from = strtotime($this->input->post('date_from'));
         $date_to = strtotime($this->input->post('date_to'));
         if (!empty($date_to)) {
@@ -622,21 +653,22 @@ class Pharmacy extends MX_Controller {
 
         $data['payments'] = $this->pharmacy_model->getPaymentByDate($date_from, $date_to);
         $data['expenses'] = $this->pharmacy_model->getExpenseByDate($date_from, $date_to);
-     
+
         $data['from'] = $this->input->post('date_from');
         $data['to'] = $this->input->post('date_to');
         $data['settings'] = $this->settings_model->getSettings();
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/financial_report', $data);
         $this->load->view('home/footer'); // just the footer fi
     }
 
-    function getPaymentList() {
+    function getPaymentList()
+    {
         $requestData = $_REQUEST;
         $start = $requestData['start'];
         $limit = $requestData['length'];
         $search = $this->input->post('search')['value'];
-        
+
         $order = $this->input->post("order");
         $columns_valid = array(
             "0" => "id",
@@ -664,7 +696,7 @@ class Pharmacy extends MX_Controller {
         }
 
 
-       
+
         $i = 0;
         $option1 = '';
         $option2 = '';
@@ -705,7 +737,7 @@ class Pharmacy extends MX_Controller {
             );
         } else {
             $output = array(
-                
+
                 "recordsTotal" => 0,
                 "recordsFiltered" => 0,
                 "data" => []
@@ -715,7 +747,8 @@ class Pharmacy extends MX_Controller {
         echo json_encode($output);
     }
 
-    function previousInvoice() {
+    function previousInvoice()
+    {
         $id = $this->input->get('id');
         $data1 = $this->pharmacy_model->getFirstRowPaymentById();
         if ($id == $data1->id) {
@@ -738,14 +771,15 @@ class Pharmacy extends MX_Controller {
         }
     }
 
-    function nextInvoice() {
+    function nextInvoice()
+    {
         $id = $this->input->get('id');
 
 
         $data1 = $this->pharmacy_model->getLastRowPaymentById();
 
 
-        
+
         if ($id == $data1->id) {
             $data = $this->pharmacy_model->getFirstRowPaymentById();
             redirect('finance/pharmacy/invoice?id=' . $data->id);
@@ -768,7 +802,8 @@ class Pharmacy extends MX_Controller {
         }
     }
 
-    function daily() {
+    function daily()
+    {
         $data = array();
         $year = $this->input->get('year');
         $month = $this->input->get('month');
@@ -800,12 +835,13 @@ class Pharmacy extends MX_Controller {
         $data['last_minute'] = $last_minute;
         $data['all_payments'] = $all_payments;
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/daily', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    function dailyExpense() {
+    function dailyExpense()
+    {
         $data = array();
         $year = $this->input->get('year');
         $month = $this->input->get('month');
@@ -839,12 +875,13 @@ class Pharmacy extends MX_Controller {
 
 
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/daily_expense', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    function monthly() {
+    function monthly()
+    {
         $data = array();
         $year = $this->input->get('year');
 
@@ -872,12 +909,13 @@ class Pharmacy extends MX_Controller {
         $data['last_minute'] = $last_minute;
         $data['all_payments'] = $all_payments;
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/monthly', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
 
-    function monthlyExpense() {
+    function monthlyExpense()
+    {
         $data = array();
         $year = $this->input->get('year');
 
@@ -905,11 +943,10 @@ class Pharmacy extends MX_Controller {
         $data['last_minute'] = $last_minute;
         $data['all_expenses'] = $all_expenses;
 
-        $this->load->view('home/dashboard', $data); 
+        $this->load->view('home/dashboard', $data);
         $this->load->view('pharmacy/monthly_expense', $data);
-        $this->load->view('home/footer'); 
+        $this->load->view('home/footer');
     }
-
 }
 
 /* End of file pharmacy.php */

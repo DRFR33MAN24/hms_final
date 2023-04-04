@@ -127,7 +127,7 @@ class Lab extends MX_Controller
             $this->load->view('home/permission');
         }
         if ($lab->updated_on) {
-            $update_on = lang('updated').': '.date('l d M Y h:s A', $lab->updated_on);
+            $update_on = lang('updated') . ': ' . date('l d M Y h:s A', $lab->updated_on);
         } else {
             $update_on = '';
         }
@@ -136,9 +136,9 @@ class Lab extends MX_Controller
         $age = explode('-', $patient->age);
         if (count($age) == 3) {
 
-            $age_as = '<td style="padding-right: 10px;"><label class="control_label">'.lang('age').'</label> <span class="info_text">:' . $age[0] . " Y " . $age[1] . " M " . $age[2] . " D" . '</td></span>';
+            $age_as = '<td style="padding-right: 10px;"><label class="control_label">' . lang('age') . '</label> <span class="info_text">:' . $age[0] . " Y " . $age[1] . " M " . $age[2] . " D" . '</td></span>';
         } else {
-            $age_as = '<td style="padding-right: 10px;"><label class="control_label">'.lang('age').'</label> <span class="info_text">: </span></td>';
+            $age_as = '<td style="padding-right: 10px;"><label class="control_label">' . lang('age') . '</label> <span class="info_text">: </span></td>';
         }
 
         $doctor_details = "";
@@ -189,25 +189,25 @@ class Lab extends MX_Controller
                                 <td>
                                     <h4 style="margin-bottom: 10px; font-weight: 800; margin-top: -20px;">' . $settings1->title . '</h4>
                                     <h6 style="margin-bottom: 10px;">' . $settings1->address . '</h6>
-                                    <h4 style="line-height: 20px">'.lang('phone').': <br>' . $settings1->phone . '</h4>
+                                    <h4 style="line-height: 20px">' . lang('phone') . ': <br>' . $settings1->phone . '</h4>
                                 </td>
                                 <td>
                                     <table style="margin-top: 10px;">
                                         <tr>
                                             <td colspan="2">
-                                                <label class="control_label">'.lang('name').'</label> <span class="info_text">:' . $patient->name . '</span>
+                                                <label class="control_label">' . lang('name') . '</label> <span class="info_text">:' . $patient->name . '</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             ' . $age_as . '
                                             <td>
-                                                <label class="control_label">'.lang('done_by').'</label> <span class="info_text">: ' . $patient->sex . '</span>
+                                                <label class="control_label">' . lang('done_by') . '</label> <span class="info_text">: ' . $patient->sex . '</span>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td style="padding-right: 10px;"><label class="control_label">HN</label> <span class="info_text">: 0000000' . $patient->id . '</span></td>
-                                            <td><label class="control_label">'.lang('phone').'</label> <span class="info_text">: ' . $patient->phone . '</span></td>
+                                            <td><label class="control_label">' . lang('phone') . '</label> <span class="info_text">: ' . $patient->phone . '</span></td>
                                         </tr>
                                        
                                         <tr>
@@ -217,7 +217,7 @@ class Lab extends MX_Controller
                                         </tr>
                                         <tr>
                                             <td colspan="2">
-                                                <label class="control_label">'.lang('doctor').'</label>
+                                                <label class="control_label">' . lang('doctor') . '</label>
                                                 ' . $doc_name . '
                                             </td>
                                         </tr>
@@ -252,7 +252,7 @@ class Lab extends MX_Controller
                                 <table style="width: 100%">
                                 
                                     <tr>
-                                        <td  id="footer_done" style="padding-right: 20px;"><span class="info_text">'.lang('done_by').': ' . $lab->done_by . '</span>
+                                        <td  id="footer_done" style="padding-right: 20px;"><span class="info_text">' . lang('done_by') . ': ' . $lab->done_by . '</span>
                                           
 </td>
                                         <td id="footer_second">
@@ -269,6 +269,8 @@ class Lab extends MX_Controller
         $mpdf = new \Mpdf\Mpdf();
         $mpdf->setAutoTopMargin = 'stretch';
         $mpdf->setAutoBottomMargin = 'stretch';
+        $mpdf->autoScriptToLang = true;
+        $mpdf->autoLangToFont = true;
         $mpdf->SetHTMLHeader($header);
         $mpdf->SetHTMLFooter($footer);
         $mpdf->setAutoBottomMargin = 'stretch';
@@ -592,7 +594,7 @@ class Lab extends MX_Controller
                     $bill_status = '<span class="label label-success">' . lang('paid') . '</span>';
                 }
             }
-            
+
 
             if ($lab->category_id != null) {
                 $test_name = $this->finance_model->getPaymentCategoryById($lab->category_id);
@@ -783,7 +785,7 @@ class Lab extends MX_Controller
 
             $bill_status = "";
             if (!empty($invoice_details)) {
-                if (($invoice_details->gross_total - $total_deposit) > 0) { 
+                if (($invoice_details->gross_total - $total_deposit) > 0) {
                     $bill_status =  '<span class="label label-danger">' . lang('due_have') . '</span>';
                 } else {
                     $bill_status = '<span class="label label-success">' . lang('paid') . '</span>';
@@ -1005,7 +1007,7 @@ class Lab extends MX_Controller
             }
 
             $options2 = '<a class="btn btn-xs invoicebutton" title="' . lang('lab') . '" style="color: #fff;" href="lab/invoice?id=' . $lab->id . '"><i class="fa fa-file"></i> ' . lang('view') . '</a>';
-            $options2 = '<a class="btn btn-xs invoicebutton" title="Download PDF" style="color: #fff;" href="lab/viewReport?id=' . $lab->id . '"><i class="fa fa-eye"></i> '.lang('view').'</a>'
+            $options2 = '<a class="btn btn-xs invoicebutton" title="Download PDF" style="color: #fff;" href="lab/viewReport?id=' . $lab->id . '"><i class="fa fa-eye"></i> ' . lang('view') . '</a>'
                 . '<a class="btn btn-xs invoicebutton" title="Download PDF" style="color: #fff;" href="lab/testPdf?id=' . $lab->id . '"> <i class="fa fa-file-pdf"></i> PDF</a>';
 
             // $options2 = '<a class="btn btn-xs invoicebutton" title="Download PDF" style="color: #fff;" href="lab/viewReport?id=' . $lab->id . '"><i class="fas fa-eye"></i></a>'
@@ -1021,9 +1023,9 @@ class Lab extends MX_Controller
             $options3 = "";
 
             if ($lab->delivery_status == 'pending' || ($lab->delivery_status == 'delivered' && $lab->receiver_name == null)) {
-                $options3 .= ' <a class="btn btn-success btn-xs changeDeliveryStatus" data-id="' . $lab->id . '"><i class="fas fa-check"></i> '.lang('deliver').'</a>';
+                $options3 .= ' <a class="btn btn-success btn-xs changeDeliveryStatus" data-id="' . $lab->id . '"><i class="fas fa-check"></i> ' . lang('deliver') . '</a>';
             } else {
-                $options3 .= ' <a class="btn btn-success btn-xs changeDeliveryStatus" data-id="' . $lab->id . '"><i class="fas fa-check"></i> '.lang('deliver').'</a>';
+                $options3 .= ' <a class="btn btn-success btn-xs changeDeliveryStatus" data-id="' . $lab->id . '"><i class="fas fa-check"></i> ' . lang('deliver') . '</a>';
             }
 
 
@@ -1072,7 +1074,7 @@ class Lab extends MX_Controller
 
             $bill_status = "";
             if (!empty($invoice_details)) {
-                if (($invoice_details->gross_total - $total_deposit) > 0) { 
+                if (($invoice_details->gross_total - $total_deposit) > 0) {
                     $bill_status =  '<span class="label label-danger">' . lang('due_have') . '</span>';
                 } else {
                     $bill_status = '<span class="label label-success">' . lang('paid') . '</span>';
@@ -3224,9 +3226,9 @@ class Lab extends MX_Controller
         $age = explode('-', $patient->age);
         if (count($age) == 3) {
 
-            $age_as = '<td style="padding-right: 10px;"><label class="control_label">'.lang('age').'</label> <span class="info_text">: ' . $age[0] . " Y " . $age[1] . " M " . $age[2] . " D" . '</td></span>';
+            $age_as = '<td style="padding-right: 10px;"><label class="control_label">' . lang('age') . '</label> <span class="info_text">: ' . $age[0] . " Y " . $age[1] . " M " . $age[2] . " D" . '</td></span>';
         } else {
-            $age_as = '<td style="padding-right: 10px;"><label class="control_label">'.lang('age').'</label> <span class="info_text">: </span></td>';
+            $age_as = '<td style="padding-right: 10px;"><label class="control_label">' . lang('age') . '</label> <span class="info_text">: </span></td>';
         }
 
         $doctor_details = "";
@@ -3283,19 +3285,19 @@ class Lab extends MX_Controller
                                     <table style="margin-top: 10px;">
                                         <tr>
                                             <td colspan="2">
-                                                <label class="control_label">'.lang('name').'</label> <span class="info_text">: ' . $patient->name . '</span>
+                                                <label class="control_label">' . lang('name') . '</label> <span class="info_text">: ' . $patient->name . '</span>
                                             </td>
                                         </tr>
                                         <tr>
                                             ' . $age_as . '
                                             <td>
-                                                <label class="control_label">'.lang('gender').'</label> <span class="info_text">: ' . $patient->sex . '</span>
+                                                <label class="control_label">' . lang('gender') . '</label> <span class="info_text">: ' . $patient->sex . '</span>
                                             </td>
                                         </tr>
 
                                         <tr>
                                             <td style="padding-right: 10px;"><label class="control_label">HN</label> <span class="info_text">: 0000000' . $patient->id . '</span></td>
-                                            <td><label class="control_label">'.lang('phone').'</label> <span class="info_text">: ' . $patient->phone . '</span></td>
+                                            <td><label class="control_label">' . lang('phone') . '</label> <span class="info_text">: ' . $patient->phone . '</span></td>
                                         </tr>
                                        
                                         <tr>
@@ -3305,7 +3307,7 @@ class Lab extends MX_Controller
                                         </tr>
                                         <tr>
                                             <td colspan="2">
-                                                <label class="control_label">'.lang('doctor').'</label>
+                                                <label class="control_label">' . lang('doctor') . '</label>
                                                 ' . $doc_name . '
                                             </td>
                                         </tr>

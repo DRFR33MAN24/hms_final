@@ -1594,10 +1594,10 @@ class Finance extends MX_Controller
         }
 
 
-        $patient_hospital_id = $this->patient_model->getPatientById($patient)->hospital_id;
-        if ($patient_hospital_id != $this->session->userdata('hospital_id')) {
-            redirect('home/permission');
-        }
+        // $patient_hospital_id = $this->patient_model->getPatientById($patient)->hospital_id;
+        // if ($patient_hospital_id != $this->session->userdata('hospital_id')) {
+        //     redirect('home/permission');
+        // }
 
 
 
